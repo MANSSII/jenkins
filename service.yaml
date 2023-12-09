@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: chucknorris-app-service
+  labels:
+    app: chucknorris-app
+spec:
+  selector:
+    app: chucknorris-app
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
+  type: NodePort
+
