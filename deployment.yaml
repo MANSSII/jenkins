@@ -1,25 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: chucknorris-app-deployment
+  name: deployment
   labels:
-    app: chucknorris-app
+    app: react-app
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: chucknorris-app
+      app: react-app
   template:
     metadata:
       labels:
-        app: chucknorris-app
+        app: react-app
     spec:
       containers:
-      - name: chucknorris-app
+      - name: react-app
         image: mb2122/chucknorris:latest 
-        resources:
-          requests:
-            cpu: "100m"
         ports:
         - containerPort: 3000
 

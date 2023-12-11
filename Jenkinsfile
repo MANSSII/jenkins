@@ -1,6 +1,8 @@
 pipeline {
+
     environment {
-        dockerImageName = "mb2122/chucknorris"
+        dockerimagename = "mb2122/chucknorris"
+        dockerImage = ""
     }
 
     agent any
@@ -8,29 +10,27 @@ pipeline {
     stages {
         stage('Checkout Source') {
             steps {
-                git 'https://github.com/MANSSII/chucknorris'
+                git 'https://github.com/MANSSII/jenkins-kubernetes-deployment.git'
             }
         }
 
-        stage('Build Docker Image') {
+        stage('Build image') {
             steps {
                 script {
-                    // Build Docker image
-                    dockerImage = docker.build dockerImageName
+                    dockerImage = docker.build dockerimagename
                 }
             }
         }
 
-        stage('Push Image to Docker Hub') {
+        stage('Pushing Image') {
             environment {
-                registryCredential = 'dockerhubcredentials'
+                registryCredential = 'dockerhub-credentials'
             }
 
             steps {
                 script {
-                    // Push Docker image to Docker Hub
                     docker.withRegistry('https://registry.hub.docker.com', registryCredential) {
-                        dockerImage.push()
+                        dockerImage.push("latest")
                     }
                 }
             }
@@ -39,10 +39,7 @@ pipeline {
         stage('Deploy to Kubernetes') {
             steps {
                 script {
-                    // Deploy to Kubernetes
-                    kubernetesDeploy(
-                        kubeconfigId: 'your-kubeconfig-id',
-                        configs: ['deployment.yaml', 'service.yaml']
+                    kubernetesDeploy(configs:"deployment.yaml", "service.yaml")
                     )
                 }
             }
