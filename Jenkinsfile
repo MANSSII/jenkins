@@ -17,10 +17,17 @@ pipeline {
         stage('Build image') {
             steps {
                 script {
-                    dockerImage = docker.build dockerimagename
-                }
+                    //dockerImage = docker.build dockerimagename
+                    docker {
+                    image 'gradle:8.2.0-jdk17-alpine'
+                    // Run the container on the node specified at the
+                    // top-level of the Pipeline, in the same workspace,
+                    // rather than on a new node entirely:
+                    reuseNode true
+                            }
+                        }
+                    }        
             }
-        }
 
         stage('Pushing Image') {
             environment {
