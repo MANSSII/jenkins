@@ -1,4 +1,42 @@
 pipeline {
+    environment {
+        dockerimagename = "mb2122/chucknorris"
+        dockerImage = ""
+    }
+
+    agent any
+
+    stages {
+        stage('Checkout Source') {
+            steps {
+                git 'https://github.com/MANSSII/jenkins-kubernetes-deployment.git'
+            }
+        }
+
+        stage('Pull Docker Image') {
+            steps {
+                script {
+                    docker.image(mb2122/chucknorris).pull()
+                }
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+/*
+
+
+pipeline {
 
     environment {
         dockerimagename = "mb2122/chucknorris"
@@ -53,3 +91,4 @@ pipeline {
     }
 }
 
+*/
