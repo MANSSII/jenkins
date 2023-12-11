@@ -9,6 +9,7 @@ pipeline {
     stages {
         stage('Checkout Source') {
             steps {
+                echo 'Checking out source code...'
                 git 'https://github.com/MANSSII/jenkins-kubernetes-deployment.git'
             }
         }
@@ -16,12 +17,14 @@ pipeline {
         stage('Pull Docker Image') {
             steps {
                 script {
-                    docker.image(mb2122/chucknorris).pull()
+                    echo 'Pulling Docker image...'
+                    docker.image(dockerimagename).pull()
                 }
             }
         }
     }
 }
+
 
 
 
