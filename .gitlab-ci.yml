@@ -1,0 +1,22 @@
+Dev:
+ stage: build
+ script:
+   - echo "Hello, $GITLAB_USER_LOGIN!"
+
+stage1:
+  stage: test
+  script:
+    - echo  "This job tests something"
+
+stage2:
+  stage: test
+  script:
+    - echo "This job tests something but take more time than stage1"
+    - echo "After the echo commands complete, it runs the sleep command for 20 seconds"
+    - sleep 20
+
+deploy-prod:
+    stage: deploy
+    script: 
+    - echo "This job deploy prod"
+    environment: production
